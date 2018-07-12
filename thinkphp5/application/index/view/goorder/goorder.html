@@ -1,0 +1,303 @@
+{extend name="base"}
+{block name="private_source"}
+    <link rel="stylesheet" href="__STATIC__/home/css/confirm_order.css">
+    <script src="__STATIC__/home/js/shopcart.js"></script>
+     <script src="__STATIC__/home/js/confirm_order.js"></script>
+    <script src="__STATIC__/home/js/navSelect.js"></script>
+    
+{/block}
+{block name="middle"}
+<div id="middle">
+    <div class="middle_top">
+        <ul class="clearfix">
+            <li>
+                <span>1</span>
+                <p>我的购物车</p>
+            </li>
+            <li class="active">
+                <span>2</span>
+                <p>填写核对订单信息</p>
+            </li>
+            <li>
+                <span>3</span>
+                <p>成功提交订单</p>
+            </li>
+        </ul>
+    </div>
+    <div class="middle_content">
+        <h1>填写收货地址</h1>
+        <div class="address">
+            <ul class="clearfix">
+            {if condition="$address!=''"}
+             {volist name="address" id="vo"}
+                <li class="add addressd">
+                    <div class="add_con">
+                        <ul>
+                            <input type="hidden" value="{$vo.id}">
+                            <li class="clearfix">
+                                <img src="__STATIC__/home/img/confirm_phone.png" alt="confirm_phone.png">
+                                <p>{$vo.person}</p>
+                            </li>
+                            <li class="clearfix">
+                                <img src="__STATIC__/home/img/confirm_address.png" alt="confirm_address.png">
+                                <p>{$vo.add}</p>
+                            </li>
+                            <li class="clearfix">
+                                <img src="__STATIC__/home/img/confirm_clock.png" alt="confirm_clock.png">
+                                <p>{$vo.phone}</p>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+             {/volist}
+            {/if}
+                <li class="add">
+                    <div class="add_con">
+                        <ul class="add_last">
+                            <li>
+                                <button type="button">
+                                
+                                    <a href="javascript:void(0);" onclick="window.location.href='{:url('\/Index\/Goorder\/address')}'"><img src="__STATIC__/home/img/address_add.png" alt="address_add.png">
+                                    <span>添加地址</span></a>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="middle_foot clearfix">
+        <div class="confirm_head">
+            <h1>店铺名称：papa旗航店</h1>
+        </div>
+        <div class="confirm_middle">
+            <table cellspacing="0 " cellpadding="0">
+                <thead>
+                <tr>
+                    <th>商品信息</th>
+                    <th>商品规格</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>金额</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                 {if condition="$shopcar_list!=''"}
+                {volist name="shopcar_list" id="vo"}
+                <tr>
+                    <td>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="{$vo.p_thumb_path}" alt="shop_img1.png"></a>
+                        <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">{$vo.p_name} </a></p>
+                    </td>
+                    <td>
+                            <span> <i class="attr">{$vo.att_name_list}</i></span>
+                             
+                        </td>
+                    <td>
+                        <span>¥ <i class="price">{$vo.price}</i></span>
+                        <b>¥ {$vo.show_price}</b>
+                    </td>
+                    <td>
+                        <input type="text" class="num" value="{$vo.number}">
+                    </td>
+                    <td>
+                        <span class="mintotal_first">¥ <i class="mintotal">{$vo.price*$vo.number}</i></span>
+                    </td>
+                    <td>
+                        <a href="javascript:;" onclick="del({$vo.shopcar_id})" >删除</a>
+                    </td>
+                </tr>
+                {/volist}
+                {/if}  
+                </tbody>
+            </table>
+            <div class="confirm_message">
+                <div class="invoice clearfix">
+                    <p>使用发票：<span>开票抬头</span></p>
+                    <div class="invoice_con">
+                        <label>不开票</label>
+                        <input type="radio" name="invoice" class="hidden" >
+                        <label>个人</label>
+                        <input type="radio" name="invoice" class="hidden">
+                        <label>公司</label>
+                        <input type="radio" name="invoice" class="hidden">
+                        <input type="text" class="invoive_add">
+                    </div>
+                </div>
+                <script>
+                    //尾部下拉样式
+                    $(function(){
+                        var state=true;
+                        $('.select').each(function (i) {
+                            $(this).click(function(){
+                                if(state){
+                                    if(!($(this).is(":animated"))){
+                                        $(this).find('.option').slideDown();
+                                    }else{
+                                        $(this).find('.option').css("display","none");
+                                    }
+                                    state=false;
+                                }else{
+                                    if(!($(this).is(":animated"))){
+                                        $(this).find('.option').slideUp();
+                                    }else{
+                                        $(this).stop(true,true);
+                                        $(this).find('.option').css("display","");
+                                    }
+                                    state=true;
+                                }
+                            });
+                            $(this).find('li').click(function(){
+                                $(this).parents('.option').css("display","none");
+                                $(this).parents('.option').prev().text($(this).html());
+                                state=false;
+                            });
+                            $(this).find('.option').click(function(){
+                                $(this).click(function(){return false;});
+                            });
+                        });
+                    });
+                </script>
+                <div class="message clearfix">
+                    <label for="message"> 订单留言：</label>
+                    <textarea name="message" id="message" cols="30" rows="3"></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="confirm_foot clearfix">
+        {if condition="isset($totalPrice)"}
+         <p>商品总价（不含运费）<span>￥<i class="sum">
+            {$totalPrice}
+            
+            </i></span></p>
+            <!-- <p>运费：<span>￥<i>0.00</i></span></p>
+            <p>优惠：<span>￥<i>0.00</i></span></p> -->
+            <p>应付金额：<span>￥<i class="sum">
+            {$totalPrice}
+            </i></span></p>
+            <input type="button" value="提交订单" onclick="commitOrder()">
+        {else}
+           <p>商品总价（不含运费）<span>￥<i class="sum">
+              0.00
+            </i></span></p>
+            <!-- <p>运费：<span>￥<i>0.00</i></span></p>
+            <p>优惠：<span>￥<i>0.00</i></span></p> -->
+            <p>应付金额：<span>￥<i class="sum">
+             0.00
+            </i></span></p>
+            <input type="button" value="提交订单" style="display: none" onclick="commitOrder()">
+        {/if}
+            <!-- <input type="button" value="提交订单" onclick="window.location.href='{:url('\/Index\/Pay\/pay')}'"> -->
+          <!--   <p>商品总价（不含运费）<span>￥<i class="sum">
+             {if condition="isset($totalPrice)"}
+            {$totalPrice}
+            {else}0.00
+            {/if}
+            </i></span></p>
+            <!-- <p>运费：<span>￥<i>0.00</i></span></p>
+            <p>优惠：<span>￥<i>0.00</i></span></p> -->
+            <!-- <p>应付金额：<span>￥<i class="sum">{if condition="isset($totalPrice)"} -->
+            <!-- {$totalPrice} -->
+            <!-- {else}0.00 -->
+            <!-- {/if}</i></span></p> -->
+            <!-- <input type="button" value="提交订单" onclick="commitOrder()"> -->
+            <!-- <input type="button" value="提交订单" onclick="window.location.href='{:url('\/Index\/Pay\/pay')}'"> --> 
+
+        </div>
+    </div>
+</div>
+<!--middle end-->
+<script>
+    function commitOrder(totalPrice)
+    {
+        var address_id= $(".act").find('input').val();
+        // var shopcar_list=$("#shopcar_list").val();
+
+        // alert(JSON.parse(shopcar_list))
+        var message=$("#message").val();
+        // console.log(shopcar_list);
+        if (!address_id)
+        { 
+            // alert(222)
+             layer.msg('请勾选地址',{icon:2,time:1000});
+        }
+        else
+        {
+            $.ajax({
+                    url : "{:url('Goorder/commitOrder')}",
+                    data : {'add_id':address_id,'message':message},
+                    dataType : 'json',
+                    type : 'post',
+                    async : false,
+                    success : function(data){
+                        if( data.code == 1 ){
+                            window.location.href=data.url;
+                            // $(obj).parent().siblings().find(".total_price").html(price.toFixed(2));
+                            // check地址();
+                             // window.location.reload();
+                        }else{
+                       layer.msg(data.msg, {icon:2,time:3000,btn:['确定']});
+                        }
+                            
+                    }
+
+                });
+        }
+       
+    }
+    function del(id)
+    {
+       // var shopcar_id=$('.shopcar_id').val();
+       //  alert(shopcar_id);return
+       // console.log(11);
+        layer.confirm('确认要删除吗？',function(index){
+           $.ajax({
+                    url : "{:url('Goorder/delete')}",
+                    data : {'id':id},
+                    dataType : 'json',
+                    type : 'post',
+                    async : false,
+                    success : function(info){
+                        if( info.code == 1 ){
+                            // $(obj).parent().siblings().find(".total_price").html(price.toFixed(2));
+                            // check地址();
+                             window.location.reload();
+                        }
+                    }
+                });
+         }); 
+
+    }
+function change()
+{
+   // $("#getfirst").find("ul li:first-child")
+    var div= $('.address').children().children().first().next();
+    console.log(div);
+    var newAddress=div.clone();
+     div.after(newAddress);
+}
+    //添加地址
+    function change2(obj)
+{
+    // 选中a标签所在的div标签
+    var div = $(obj).parent().parent();
+    // 先获取i标签中的class名
+    if($(obj).find("i").hasClass("true"))
+    {
+        // 把div克隆一份
+        var newDiv = div.clone();
+        // 把克隆出来的div里面的i标签变成-号
+        newDiv.find("i").removeClass("true");
+        newDiv.find("a").removeClass("btn-primary");
+        newDiv.find("a").addClass("btn-danger");
+        newDiv.find("i").html("&#xe6a1;");
+        // 放在后面
+        div.after(newDiv);
+    }
+    else
+        div.remove();
+}
+</script>
+{/block}

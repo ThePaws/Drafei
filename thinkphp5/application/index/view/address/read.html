@@ -1,0 +1,102 @@
+{extend name="base"}
+{block name="private_source"}
+    <link rel="stylesheet" href="__STATIC__/home/css/address.css">
+    <script type="text/javascript" src="CSS_DIR/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="CSS_DIR/static/h-ui.admin/js/H-ui.admin.js"></script>
+    
+{/block}
+{block name="middle"}
+<!--middle-->
+<div id="middle" class="clearfix">
+    <div class="content_left">
+        <h2><a href="user.html">个人中心</a></h2>
+        <ul>
+            <li><a href="user.html">我的用户中心</a></li>
+            <li><a href="{:url('Shopcar/shopcar')}">我的购物车</a></li>
+            <li class="on"><a href="{:url('Myorder/read')}">我的订单</a></li>
+            <li><a href="#">我的收藏</a></li>
+            <li><a href="#">我的评价</a></li>
+            <li><a href="#">提取现金</a></li>
+            <li><a href="#">提取金额</a></li>
+        </ul>
+        <h2><a href="#">我的账户</a></h2>
+        <ul>
+            <li class="on"><a href="{:url('Address/read')}">地址管理</a></li>
+            <li><a href="#">个人信息</a></li>
+        </ul>
+        <h2><a href="#">退款维权</a></h2>
+        <ul class="last_row">
+            <li><a href="#">系统消息</a></li>
+            <li><a href="#">举报管理</a></li>
+        </ul>
+    </div>
+    <div class="content_right clearfix">
+        <h1>订单详情</h1>
+        <input type="button" value="新增地址" id="address" onClick="apend_add('添加地址','/Index/address/add','10001','600','270')">
+        <div class="right_top">
+            <table>
+                <thead>
+                <tr>
+                    <th>收货人姓名</th>
+                    <th>详细地址</th>
+                    <th>联系电话</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                <tbody>
+                {volist name="address" id="vo"}
+                <tr>
+                    <td>{$vo.person}</td>
+                    <td>{$vo.add}</td>
+                    <td>{$vo.phone}</td>
+                    <td>
+                        <a href="javascript:;" onClick="change_password('修改地址','/Index/address/edit/id/{$vo.id}','10001','600','270')">编辑</a>
+                        <a href="javascript:;" onclick="dele({$vo.id})">删除</a>
+                    </td>
+                </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+        <div class="right_bottom">
+            <button>上一页</button>
+            <span>1</span>
+            <button>下一页</button>
+        </div>
+    </div>
+</div>
+<script>
+function apend_add(title,url,id,w,h){
+        layer_show(title,url,w,h); 
+        // alert(123)
+    }
+    function change_password(title,url,id,w,h){
+        layer_show(title,url,w,h); 
+        // alert(123)
+    }
+   function  dele(id){
+    layer.confirm('确认要删除吗？',function(index){
+        $.ajax({
+
+                url:"{:url('Address/dele')}",
+                type:'post',
+                data:{'id':id},
+                dataType:'json',
+                success:function(data){
+                    // console.log(data);return;    
+                    if (data.code == 1) {
+                         layer.msg(data.msg, {icon:1,time:1000},function(){
+                            parent.location.reload();}
+                                )
+                        }else{
+                          layer.msg(data.msg, {icon:2,time:3000})
+                        };
+                    
+                }
+            })
+    })
+  } 
+</script>
+
+<!--middle end-->
+{/block}

@@ -1,0 +1,446 @@
+{extend name="base"}
+{block name="private_source"}
+<link rel="stylesheet" href="__STATIC__/home/css/index.css">
+
+  
+{/block}
+{block name="middle"}
+<div id="slideBox" class="slideBox">
+    <div class="hd">
+        <ul>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+    <div class="bd">
+        <ul>
+            <li><a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/banner.png" /></a></li>
+            <li><a href="{:url('/Index/prodetails/prodetails')}?id=2"><img src="__STATIC__/home/img/banner1.png" /></a></li>
+            <li><a href="{:url('/Index/prodetails/prodetails')}?id=3"><img src="__STATIC__/home/img/banner2.png" /></a></li>
+        </ul>
+    </div>
+</div>
+{literal}
+<script>
+    $(function (){
+          $(".slideBox").slide({mainCell:".bd ul",autoPlay:true});
+    })
+
+</script> 
+{/literal}  
+    <div id="middle">
+        <div class="latest_product">
+            <div class="latest_top clearfix">
+                <h1>最新商品</h1>
+                <span>Latest product</span>
+                <a href="shop_list.html">more</a>
+            </div>
+            <div class="latest_content clearfix">
+                <div class="latest_left">
+                    <ul class="pic">
+                      {volist name="subBanner" id="vo"}
+                      {if condition="$key lt 3"}
+                        <li><a href="{:url('/Index/prodetails/prodetails')}?id={$vo.p_id}"><img src="{$vo.path.0.path}"/ style="width:575px;height:522px;"></a></li>
+                        {/if}
+                      {/volist}
+                    </ul>
+                    <ul class="pro_hd clearfix">
+                        <li></li>
+                        <li></li>
+                        <li></li>
+                    </ul>
+                    <script type="text/javascript">
+                    $(function (){
+                        jQuery(".latest_left").slide({ mainCell:".pic",titCell:".pro_hd li",effect:"left", autoPlay:true, delayTime:300});
+                    });
+                    </script>
+                </div>
+                <div class="latest_right">
+                    <ul class="clearfix">
+                    {volist name="subBanner" id="vo"}
+                      {if condition=" $key >2 and $key < 5 "}
+                        <li>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id={$vo.p_id}"><img src="{$vo.path.0.path}"/ style="width:294px;height:521px;"></a>
+                            <div class="details" onclick="window.location.href='pro_details.html'">
+                                <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">{$vo.p_name}</a></p>
+                                <h2>¥{$vo.show_price}</h2>
+                            </div>
+                        </li>
+                         {/if}
+                      {/volist}
+                    </ul>
+                </div>
+
+            </div>
+            <div class="latest_bottom">
+                <ul class="clearfix">
+                 {volist name="subBanner" id="vo"}
+                      {if condition=" $key >4"}
+                    <li style="text-overflow:ellipsis;width:231px;">
+                        <a href="{:url('/Index/prodetails/prodetails')}?id={$vo.p_id}"><img src="{$vo.path.0.path}" alt="index_latest_pro1.png" style="width:231px;height:260px;"></a>
+                        <p class="margin_p"><a href="{:url('/Index/prodetails/prodetails')}?id={$vo.p_id}">{$vo.p_name}</a></p>
+                        <p class="clearfix"><a href="{:url('/Index/prodetails/prodetails')}?id={$vo.p_id}"><span>¥ {$vo.show_price}</span></a></p>
+                    </li>
+                    {/if}
+                   {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="hot_product">
+            <div class="hot_top clearfix">
+                <h1>热门产品</h1>
+                <span>Hot product</span>
+                <a href="shop_list.html">more</a>
+            </div>
+            <div class="hot_content">
+                <ul class="clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_img1.png" alt="index_hot_img1.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_img2.png" alt="index_hot_img2.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_img3.png" alt="index_hot_img3.png"></a>
+                    </li>
+                </ul>
+            </div>
+            <div class="hot_bottom">
+                <ul class="bottom_top clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro1.png" alt="index_hot_pro1.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">美素佳儿----
+                                荷兰原装进口</a></p>
+                            <span>¥185.00</span>
+                            <p>58501人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro2.png" alt="index_hot_pro2.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">好奇--------
+                                尿不湿</a></p>
+                            <span>¥399.00</span>
+                            <p>28055人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro3.png" alt="index_hot_pro3.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">立健--------
+                                婴儿布书</a></p>
+                            <span>¥45.00</span>
+                            <p>388人</p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro4.png" alt="index_hot_pro4.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">贝丽可------
+                                婴儿推车</a></p>
+                            <span>¥389.00</span>
+                            <p>1286人</p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro5.png" alt="index_hot_pro5.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">巴拉巴拉男童
+                                女童羽绒服</a></p>
+                            <span>¥219.00</span>
+                            <p>590人</p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro6.png" alt="index_hot_pro6.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">尚恩宽口玻璃
+                                奶瓶180ml</a></p>
+                            <span>¥99.00</span>
+                            <p>1590人</p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro7.png" alt="index_hot_pro7.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">德国儿童汽车安全座椅</a></p>
+                            <span>¥1780.00</span>
+                            <p>2480人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro8.png" alt="index_hot_pro8.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">童佳贝贝多功能婴儿餐椅</a></p>
+                            <span>¥399.00</span>
+                            <p>1070人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro9.png" alt="index_hot_pro9.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">费雪--------早教益智玩具</a></p>
+                            <span>¥269.00</span>
+                            <p>2954人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro10.png" alt="index_hot_pro10.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">康贝方------新生儿衣服</a></p>
+                            <span>¥144.00</span>
+                            <p>1030人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro11.png" alt="index_hot_pro11.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">安儿乐------纸尿裤</a></p>
+                            <span>¥102.00</span>
+                            <p>46691人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_hot_pro12.png" alt="index_hot_pro12.png"></a>
+                        <div class="hot_pro_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">泰迪熊幼儿绘本故事书</a></p>
+                            <span>¥96.00</span>
+                            <p>594人 </p>
+                            <p>已购买</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="pick">
+            <div class="pick_top clearfix">
+                <h1>推荐商品</h1>
+                <span>Pick of the week</span>
+                <a href="shop_list.html">more</a>
+            </div>
+            <div class="pick_content">
+                <ul class="content_top clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_pick_img1.png" alt="index_pick_img1.png"></a>
+                        <div class="content_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">喜朗 婴儿手口湿巾80片带盖X9包宝宝柔棉湿纸巾</a></p>
+                            <span>¥398.00</span>
+                            <p>638人已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_pick_img2.png" alt="index_pick_img2.png"></a>
+                        <div class="content_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">雀巢 （Nestle）NIDO速溶全脂高钙调制乳粉900g荷兰</a></p>
+                            <span>¥119.00</span>
+                            <p>182人已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_pick_img3.png" alt="index_pick_img3.png"></a>
+                        <div class="content_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">Pigeon/贝亲 玻璃 奶瓶 奶粉盒 奶嘴 奶瓶刷 保温袋 婴儿 礼盒 新生儿礼盒 礼盒套装 OA07 </a></p>
+                            <span>¥288.00</span>
+                            <p>928人已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_pick_img4.png" alt="index_pick_img4.png"></a>
+                        <div class="content_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">哈罗闪Sanosan德国原装礼盒7件套婴儿洗护用品套装洗发沐浴露二合一爽身粉</a></p>
+                            <span>¥248.00</span>
+                            <p>503人已购买</p>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_pick_img5.png" alt="index_pick_img5.png"></a>
+                        <div class="content_right">
+                            <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">英国原装进口Britax宝得适 汽车儿童安全座椅头等舱白金版适合0-18kg(约0-4岁) 皇室蓝</a></p>
+                            <span>¥1880.00</span>
+                            <p>918人已购买</p>
+                        </div>
+                    </li><li>
+                    <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_pick_img6.png" alt="index_pick_img6.png"></a>
+                    <div class="content_right">
+                        <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">慕倩秋冬季三层夹棉月子服孕妇哺乳睡衣家居服产后外出喂奶哺乳衣套装   </a></p>
+                        <span>¥329.00</span>
+                        <p>169人已购买</p>
+                    </div>
+                </li>
+
+                </ul>
+            </div>
+        </div>
+        <div class="explosive">
+            <div class="explosive_top clearfix">
+                <h1>爆款推荐商品</h1>
+                <span>Explosive recommended products</span>
+                <a href="shop_list.html">more</a>
+            </div>
+            <div class="explosive_content">
+                <ul class="exp_top clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_img1.png" alt="index_explosive_img1.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small1.png" alt="index_explosive_small1.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥129.00</span>
+                            <i>¥ 299.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small2.png" alt="index_explosive_small2.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥139.00</span>
+                            <i>¥ 358.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small3.png" alt="index_explosive_small3.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥89.00</span>
+                            <i>¥ 198.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small4.png" alt="index_explosive_small4.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥119.00</span>
+                            <i>¥ 328.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="exp_middle clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_img2.png" alt="index_explosive_img2.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small5.png" alt="index_explosive_small5.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥142.00</span>
+                            <i>¥ 217.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small6.png" alt="index_explosive_small6.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥65.00</span>
+                            <i>¥ 108.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small7.png" alt="index_explosive_small7.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥84.00</span>
+                            <i>¥ 119.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small8.png" alt="index_explosive_small8.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥84.00</span>
+                            <i>¥ 119.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                </ul>
+                <ul class="exp_foot clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_img3.png" alt="index_explosive_img3.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small9.png" alt="index_explosive_small9.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥198.00</span>
+                            <i>¥ 328.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small10.png" alt="index_explosive_small10.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥36.00</span>
+                            <i>¥ 78.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small11.png" alt="index_explosive_small11.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥88.00</span>
+                            <i>¥ 296.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/index_explosive_small12.png" alt="index_explosive_small12.png"></a>
+                        <div class="exp_details clearfix">
+                            <p>优惠价：</p>
+                            <span>￥69.00</span>
+                            <i>¥ 138.00</i>
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1">立即抢</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="like">
+            <div class="like_top">
+                <h1>猜你喜欢</h1>
+            </div>
+            <div class="like_content">
+                <ul class="clearfix">
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/like_img1.png" alt="like_img1.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/like_img2.png" alt="like_img2.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/like_img3.png" alt="like_img3.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/like_img4.png" alt="like_img4.png"></a>
+                    </li>
+                    <li>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="__STATIC__/home/img/like_img5.png" alt="like_img5.png"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+<!--middle end-->
+{/block}
+<!--middle end-->

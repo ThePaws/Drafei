@@ -1,0 +1,167 @@
+{extend name="base"}
+{block name="private_source"}
+  <link rel="stylesheet" href="__STATIC__/home/css/register.css">
+  
+  
+{/block}
+{block name="middle"}
+  <div id="middle">
+    <div class="content">
+        <h1>会员注册</h1>
+        <div class="register">
+            <form action="" method="post" id="new_form">
+                <table>
+                    <tr>
+                        <td>手机号码：</td>
+                        <td class="clearfix">
+                            <input type="text" name="phone"/>
+                            <p>*请填写你的真实号码</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>手机验证码：</td>
+                        <td>
+                            <input type="text" name="phoneCode" id="telcode"/>
+                            <input type="button" id="recode" class="getting" value="获取验证码" onclick="sendMobileCode()">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Email：</td>
+                        <td class="clearfix">
+                            <input type="text" name="email"/>
+                            <p>*请输入你的邮箱</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>密码：</td>
+                        <td>
+                            <input type="password" name="password"/>
+                            <p>*登录密码，6个以上字母数组合。不区分大小写</p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>确认密码：</td>
+                        <td class="clearfix">
+                            <input type="password" name="repassword"/>
+                            <p>*再次输入你的密码</p>
+                        </td>
+                    </tr>
+                    
+                            <input type="hidden" name="registe_token" id="code" value="{$registe_token}">
+                            
+                     
+                    <tr>
+                        <td colspan="2" class="agree clearfix">
+                            <label>我已阅读并同意</label>
+                            <input type="checkbox" id="agree" name="checkbox">
+                            <a href="#" class="agreement">用户服务协议</a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+                            <input type="button" value="免费注册" id="submit"
+                             onclick="registe()">
+                        </td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+    </div>
+  </div>
+  <script>
+    /*防刷新：检测是否存在cookie*/  
+        if($.cookie("captcha")){  
+            var count = $.cookie("captcha");
+            var btn = $('.getting');  
+            btn.html(count+'秒后可重新获取').attr('disabled',true).css('cursor','not-allowed');  
+            var resend = setInterval(function(){  
+                count--;  
+                if (count > 0){  
+                    btn.html(count+'秒后可重新获取').attr('disabled',true).css('cursor','not-allowed');  
+                    $.cookie("captcha", count, {path: '/', expires: (1/86400)*count});  
+                }else {  
+                    clearInterval(resend);  
+                    btn.html("获取验证码").removeClass('disabled').removeAttr('disabled style');  
+                }  
+            }, 1000);  
+        }  
+
+        /*点击改变按钮状态，已经简略掉ajax发送短信验证的代码*/  
+        function setForbid(){ 
+        // alert(222); 
+           
+            var btn = $(".getting");  
+            // console.log(btn);
+            var count = 60;
+            // console.log(sendMobileCode());
+          
+            resend = setInterval(function(){  
+                count--;  
+                if(count > 0){  
+                    // alert(22)
+                    btn.val(count+"秒后可重新获取");  
+                    $.cookie("captcha", count, {path: '/', expires: (1/86400)*count});  
+                }else{
+                    clearInterval(resend);  
+                    btn.val("获取验证码").removeAttr('disabled style');
+                }  
+            }, 1000);
+            btn.attr('disabled',true).css('cursor','not-allowed');  
+        }
+        //发送验证码请求
+        function sendMobileCode()
+        {
+            var check=$("[name='phone']").val();
+            if (check=='')
+             {
+                 layer.msg('手机号不能空', {icon:2,time:1000,btn:['确定']});
+                 return;
+             }
+            var data={
+
+                'phone':$("[name='phone']").val(),
+            }
+            // console.log(data);
+             // alert(count);
+             $.ajax({
+            url:"{:url('Registe/sendMobileCode')}",
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(data){
+//                console.log(data);
+                if (data.code == 1) {
+                     setForbid();
+                }else{
+                    layer.msg(data.msg, {icon:2,time:6000,btn:['确定']});
+                   
+                   
+                };
+
+            }
+        })
+
+        }
+        function registe()
+        {
+        	
+        	var data = new FormData($("#new_form")[0]);
+        	$.ajax({
+            url:"{:url('Registe/registe')}",
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(data){
+//                console.log(data);
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon:1,time:1000,btn:['确定']},function(){setTimeout(window.location.href=data.url,3000 )}
+                    )
+                }else{
+                    layer.msg(data.msg, {icon:2,time:6000,btn:['确定']})
+                };
+
+            }
+        })
+        }
+</script>
+{/block}

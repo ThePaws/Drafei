@@ -1,0 +1,102 @@
+{extend name="base"}
+{block name="private_source"}
+    <link rel="stylesheet" href="__STATIC__/home/css/login.css">
+{/block}
+{block name="middle"}
+<div id="middle">
+    <div class="content">
+        <h1>地址添加</h1>
+        <div class="login_top">
+            <form action="" method="post" id="new_form">
+                <table>
+                    <tr>
+                        <td>联系人：</td>
+                        <td>
+                            <input type="text" name="person" >
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>电话:    </td>
+                        <td>
+                            <input type="text" name="phone"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <div>
+                            <td>地点：</td>
+                        <td class="clearfix">
+                            <input type="text" name="add" />
+                            
+                        </td>
+                        </div>
+                        
+                    </tr>
+                    <tr>
+                        <td colspan="2" class="submit clearfix">
+                            <input type="button" value="添加" id="submit" onclick="check()" >
+                        </td>
+                    </tr>
+                 
+                </table>
+            </form>
+        </div>
+        
+    </div>
+</div>
+<script>
+     function check()
+     {
+          var data = {
+                'person':$('input[name="person"]').val(),
+                'phone':$('input[name="phone"]').val(),
+                'add':$('input[name="add"]').val() }
+            $.ajax({
+                      url:"{:url('Index/Goorder/address')}",
+                      type:'post',
+                      data:data,
+                      dataType:'json', 
+                      success:function(data){
+                        // console.log(data);
+                        if (data.code == 1) {
+                          layer.msg(data.msg, {icon:1,time:1000},function(){setTimeout(
+                              window.location.href=data.url,1000 )}
+                            )
+                        }else{
+                          layer.msg(data.msg,{icon:2,time:3000})
+                           
+                        };
+
+                      }
+                  })
+     }
+     function login()
+        {
+            // alert(22);
+           
+            var data={
+
+                'username':$("[name='username']").val(),
+                'password':$("[name='password']").val(),
+                'code':$("[name='code']").val()
+            }
+            // console.log(data);
+            $.ajax({
+            url:"{:url('Login/login')}",
+            type:'post',
+            data:data,
+            dataType:'json',
+            success:function(data){
+//                console.log(data);
+                if (data.code == 1) {
+                    layer.msg(data.msg, {icon:1,time:1000,btn:['确定']},function(){setTimeout(window.location.href=data.url,3000 )}
+                    )
+                }else{
+                    layer.msg(data.msg, {icon:2,time:6000,btn:['确定']});
+                    document.getElementById('isrc').setAttribute('src','{:captcha_src()}')
+                };
+
+            }
+        })
+        }
+</script>
+{/block}

@@ -1,0 +1,127 @@
+{extend name="base"}
+{block name="private_source"}
+    <link rel="stylesheet" href="__STATIC__/home/css/order_details.css">
+    
+{/block}
+{block name="middle"}
+<!--middle-->
+<div id="middle" class="clearfix">
+    <div class="content_left">
+        <h2><a href="user.html">个人中心</a></h2>
+        <ul>
+            <li><a href="user.html">我的用户中心</a></li>
+            <li><a href="shop_cart.html">我的购物车</a></li>
+            <li class="on"><a href="order.html">我的订单</a></li>
+            <li><a href="#">我的收藏</a></li>
+            <li><a href="comment.html">我的评价</a></li>
+            <li><a href="#">提取现金</a></li>
+            <li><a href="#">提取金额</a></li>
+        </ul>
+        <h2><a href="#">我的账户</a></h2>
+        <ul>
+            <li><a href="address.html">地址管理</a></li>
+            <li><a href="#">个人信息</a></li>
+        </ul>
+        <h2><a href="#">退款维权</a></h2>
+        <ul class="last_row">
+            <li><a href="#">系统消息</a></li>
+            <li><a href="#">举报管理</a></li>
+        </ul>
+    </div>
+    <div class="content_right">
+        <div class="right_top">
+            <h1>订单详情</h1>
+            <table>
+                <tr>
+                    <td>订单信息</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>订单编号：</td>
+                    <td>{$list.0.order_id}
+                      {if condition="$list.0.send==1"}
+                        <span>已发货</span>
+                     {elseif condition="($list.0.pay==1) and ($list.0.send==0) "}<span>待发货</span>
+                     {else} <span>待付款</span>
+                    {/if}
+                     </td>
+                </tr>
+                <tr>
+                    <td>订单金额：</td>
+                    <td><i>￥{$list.0.total_price}</i></td>
+                </tr>
+                <tr>
+                    <td>收货地址：</td>
+                    <td>{$list.0.add.person}<b>{$list.0.add.phone}</b> <b> {$list.0.add.add}</b></td>
+                </tr>
+                <tr>
+                    <td>收货状态：</td>
+                    <td>待收货 <span>送货状态：
+                      {if condition="$list.0.send==1"}
+                        <span>已发货</span>
+                     {else} <span>未发货</span>
+                    {/if}
+                    </span></td>
+                </tr>
+                <tr>
+                    <td valign="top">买家留言：</td>
+                    <td>
+                        <textarea name="message"  cols="30" rows="10">
+                            {$list.0.message}
+                        </textarea>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="right_bottom">
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>商品</th>
+                    <th>单价</th>
+                    <th>数量</th>
+                    <th>总价</th>
+                </tr>
+                </thead>
+                {volist name="list" id="vo"}
+                <tbody>
+                <tr>
+                    <td>
+                        <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="{$vo.p_thumb_path.p_thumb_path}" alt="user_pro1.png"></a>
+                        <p><a href="{:url('/Index/prodetails/prodetails')}?id=1">{$vo.p_name.p_name} </a></p>
+                    </td>
+                    <td>
+                        <span>¥ <i class="price">{$vo.per_price}</i></span>
+                        <b>¥ {$vo.show_price.show_price}</b>
+                    </td>
+                    <td>
+                    <span>{$vo.number}</span>
+                    </td>
+                    <td>
+                        <span id="mintotal">¥ <i class="mintotal">{$vo.subtotal}</i></span>
+                    </td>
+                </tr>
+                </tbody>
+                {/volist}
+            </table>
+            <div class="settle clearfix">
+                <table>
+                    <tr>
+                        <td>商品总价：</td>
+                        <td><span>￥<i class="sum">{$vo.total_price}</i></span></td>
+                    </tr>
+                    <tr>
+                        <td>应付金额：</td>
+                        <td><span>￥<i class="sum">{$vo.total_price}</i></span></td>
+                    </tr>
+                </table>
+            </div>
+            {if condition="$list.0.pay==0"}
+
+    <input type="button" id="submit" value="去付款" onclick="window.location.href='/Index/Goorder/pay/order_id/{$list.0.order_id}'">
+            {/if}
+        </div>
+    </div>
+</div>
+{/block}
+<!--middle end-->

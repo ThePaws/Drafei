@@ -1,0 +1,205 @@
+{extend name="base"}
+{block name="private_source"}
+    <link rel="stylesheet" href="__STATIC__/home/css/order.css">
+    
+{/block}
+{block name="middle"}
+  <!--middle-->
+<div id="middle" class="clearfix">
+    <div class="content_left">
+        <h2><a href="user.html">个人中心</a></h2>
+        <ul>
+            <li><a href="#">我的用户中心</a></li>
+            <li><a href="{:url('Shopcar/shopcar')}">我的购物车</a></li>
+            <li class="on"><a href="{:url('Myorder/read')}">我的订单</a></li>
+            <li><a href="#">我的收藏</a></li>
+            <li><a href="#">我的评价</a></li>
+            <li><a href="#">提取现金</a></li>
+            <li><a href="#">提取金额</a></li>
+        </ul>
+        <h2><a href="#">我的账户</a></h2>
+        <ul>
+            <li><a href="{:url('Address/read')}">地址管理</a></li>
+            <li><a href="#">个人信息</a></li>
+        </ul>
+        <h2><a href="#">退款维权</a></h2>
+        <ul class="last_row">
+            <li><a href="#">系统消息</a></li>
+            <li><a href="#">举报管理</a></li>
+        </ul>
+    </div>
+    <div class="content_right">
+        <div class="right_top">
+            <ul class="clearfix">
+                <li class="on">
+                    <a href="#">所有订单</a>
+                </li>
+                <li>
+                    <a href="#">待付款  </a>
+                </li>
+                <li>
+                    <a href="#">待发货  </a>
+                </li>
+                <li>
+                    <a href="#">待收货</a>
+                </li>
+                <li>
+                    <a href="#">待评价  </a>
+                </li>
+                <li>
+                    <a href="#">分阶段</a>
+                </li>
+            </ul>
+            <form action="" method="post" class="clearfix">
+                <div class="order_search">
+                    <input type="text" id="order_search" placeholder="输入商品标题或订单号进行搜索">
+                    <input type="button" class="search_btn" value="订单搜索">
+                    <span class="screenbtn">精简筛选条件</span>
+                </div>
+                <div class="screen clearfix">
+                    <div class="condition type">
+                        <label>订单类型：</label>
+                        <div class="select">
+                            <span id="type">全部</span>
+                            <div class="option">
+                                <ul>
+                                    <li value="已交易">已交易</li>
+                                    <li value="待交易">待交易</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition time">
+                        <label>成交时间：</label>
+                        <div class="select">
+                            <span id="timeBegin">请选择时间范围起始 </span>
+                            <div class="option">
+                                <ul>
+                                    <li value="2016年6月">2016年6月</li>
+                                    <li value="2016年7月">2016年7月</li>
+                                    <li value="2016年8月">2016年8月</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p>-</p>
+                        <div class="select">
+                            <span id="timeEnd">请选择时间范围结束</span>
+                            <div class="option">
+                                <ul>
+                                    <li value="2017年2月">2017年2月</li>
+                                    <li value="2017年1月">2017年1月</li>
+                                    <li value="2016年12月">2016年12月</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition eva_state">
+                        <label>评价状态：</label>
+                        <div class="select">
+                            <span id="eva_state">全部</span>
+                            <div class="option">
+                                <ul>
+                                    <li value="已评价">已评价</li>
+                                    <li value="未评价">未评价</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="condition trad">
+                        <label>交易状态：</label>
+                        <div class="select">
+                            <span id="trad">全部</span>
+                            <div class="option">
+                                <ul>
+                                    <li value="已完成">已完成</li>
+                                    <li value="待付款">待付款</li>
+                                    <li value="待发货">待发货</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="more">
+                        <a href="#">查看更多</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="right_bottom">
+            <table cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <th>商品信息</th>
+                    <th>总价</th>
+                    <th>状态</th>
+                    <th>操作</th>
+                </tr>
+                </thead>
+                {volist name="list" id="vo"}
+                <tbody >
+                {volist name="vo" id="voo"}
+                <tr>
+                    <td>
+                        <a href="##"><img src="{$voo.p_thumb_path.p_thumb_path}" alt="user_pro1.png"></a>
+                        <p>{$voo.p_name.p_name}</p>
+                    </td>
+                    <td>
+                        <p><i>¥ {$voo.total_price}</i></p>
+                    </td>
+                    <td>
+                    {if condition="$voo.send==1"}
+                        <a href="javascript:;">已发货</a>
+                     {elseif condition="($voo.pay==1) and ($voo.send==0) "}<a href="javascript:;">待发货</a>
+                     {else} <a href="javascript:;">待付款</a>
+                    {/if}
+                        <a href="/index/myorder/details/order_id/{$voo.order_id}"  >订单详情</a>
+                    </td>
+                    <td>
+                      {if condition="$voo.pay==0"}
+                        <a href="javascript:;" onclick="deleOrder({$voo.order_id})">删除订单</a>
+                      {/if}
+                    </td>
+                </tr>
+                 {/volist}
+                </tbody>
+                
+                {/volist}
+            </table>
+
+            {$page}
+        </div>
+    </div>
+</div>
+<script>
+     function deleOrder(id)
+    {
+       // var shopcar_id=$('.shopcar_id').val();
+        // alert(id);return
+        layer.confirm('确认要删除吗？',function(index){
+           $.ajax({
+                    url : "{:url('Myorder/delete')}",
+                    data : {'id':id},
+                    dataType : 'json',
+                    type : 'post',
+                    async : false,
+                    success : function(data){
+                        if( data.code == 1 ){
+                             layer.msg(data.msg, {icon:1,time:1000,btn:['确定']},function(){setTimeout(
+                                 window.location.reload(),3000)})
+                    
+                            // $(obj).parent().siblings().find(".total_price").html(price.toFixed(2));
+                            // checkChange();
+                            
+                        }
+                        else
+                        {
+                            layer.msg(data.msg, {icon:2,time:1000,btn:['确定']},function(){setTimeout(
+                                 window.location.reload(),3000)})
+                        }
+                    }
+                });
+        
+            });
+    }
+</script>
+<!--middle end-->
+{/block}

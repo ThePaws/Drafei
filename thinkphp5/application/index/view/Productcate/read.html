@@ -1,0 +1,46 @@
+{extend name="base"}
+{block name="private_source"}
+ <link rel="stylesheet" href="__STATIC__/home/css/shop_list.css">
+{/block}
+{block name="middle"}
+<!--middle-->
+<div id="middle" class="clearfix">
+    <div class="nav_top">
+     
+       
+    </div>
+    <div class="shop_list_big">
+        <ul class="list_goods clearfix">
+        {volist name="product" id="vo"}
+            <li>
+                <a href="{:url('/Index/Prodetails/prodetails')}?id={$vo.p_id}"><img src="{$vo.path.0.p_thumb_path}"></a>
+                <div class="list_content">
+                    <p><a href="{:url('/Index/Prodetails/prodetails')}?id={$vo.p_id}"">{$vo.p_name}</a> </p>
+                    <span>¥{$vo.show_price}</span>
+                    <div class="list_bottom clearfix">
+                        <a href="{:url('/Index/Prodetails/prodetails')}?id={$vo.p_id}"">热卖</a>
+                    </div>
+                </div>
+            </li>
+         {/volist}
+        </ul>
+        <script>
+            $(function () {
+                $('.shop_list_big>.list_goods>li').each(function (i) {
+                    $(this).css('margin-left','64px');
+                    $('.list_goods>li').eq(0).css('margin-left','0');
+                    $('.list_goods>li').eq(4).css('margin-left','0');
+                    $('.list_goods>li').eq(8).css('margin-left','0');
+                    $('.list_goods>li').eq(12).css('margin-left','0');
+                });
+            });
+
+        </script>
+    </div>
+    {$page}
+</div>
+<!--middle end-->
+{/block}
+
+</body>
+</html>

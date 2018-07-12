@@ -1,0 +1,316 @@
+{extend name="base"}
+{block name="private_source"}
+    <link rel="stylesheet" href="__STATIC__/home/css/shop_cart.css">
+    <!-- <script src="__STATIC__/home/js/shopcart.js"></script> -->
+    
+{/block}
+{block name="middle"}
+<div id="middle" class="clearfix">
+    <div class="middle_top">
+        <ul class="clearfix">
+            <li class="active">
+                <span>1</span>
+                <p>我的购物车</p>
+            </li>
+            <li>
+                <span>2</span>
+                <p>填写核对订单信息</p>
+            </li>
+            <li>
+                <span>3</span>
+                <p>成功提交订单</p>
+            </li>
+        </ul>
+    </div>
+    <div class="middle_bottom">
+        <div class="shop_head">
+            <label class="ckeckall">店铺名称：papa旗航店</label>
+            <input type="checkbox" class="checkAll">
+        </div>
+        <div class="shop_middle">
+            <table cellspacing="0 " cellpadding="0">
+                <thead>
+                    <tr>
+                        <th>商品信息</th>
+                        <th>属性尺寸</th>
+                        <th>单价</th>
+                        <th>数量</th>
+                        <th>金额</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody class="shop_content">
+                {if condition="$shopcar_list!=''"}
+                {volist name="shopcar_list" id="vo"}
+                    <tr>
+                        <td>
+                            <label class="check_one"></label>
+                            <input type="checkbox" class="checkone">
+                            <a href="{:url('/Index/prodetails/prodetails')}?id=1"><img src="{$vo.p_thumb_path}" alt="shop_img1.png"></a>
+                            <p>{$vo.p_name}</p>
+                        </td>
+                        <td>
+                            <span> <i class="attr">{$vo.att_name_list}</i></span>
+                             
+                        </td>
+                        <td>
+                            <span>¥ <i class="price">{$vo.price}</i></span>
+                            <b>¥ {$vo.show_price}</b>
+                        </td>
+                        <td>
+                            <input type="button" class="minus">
+                            <input type="text" class="num" value="{$vo.number}">
+                            <input type="button" class="plus">
+                            <input type="hidden" value="{$vo.stock}" class="maxnum">
+                            <input type="hidden" value="{$vo.shopcar_id}" class="shopcar_id" >
+                            
+                        </td>
+                        <td>
+                            <span class="minSpan">¥ <i class="minTotal">{$vo.price*$vo.number}</i></span>
+                        </td>
+                        <td>
+                            
+                            <a href="javascript:;" class="delete" onclick="del({$vo.shopcar_id})">删除</a>
+                        </td>
+                    </tr>
+                {/volist}
+                {/if}    
+                </tbody>
+            </table>
+        </div>
+        <div class="shop_foot">
+            <p>商品总价（不含运费) <span>￥<i class="total">0.00</i></span></p>
+            {if condition="$Think.session.username==''"}
+            <input type="button" value="去结算"  style="display: none" onclick="window.location.href='{:url('\/Index\/Goorder\/goorder')}'">
+            {elseif condition="$shopcar_list==''"}
+              <input type="button" value="去结算" style="display: none"   onclick="window.location.href='{:url('\/Index\/Goorder\/goorder')}'">
+            {else}
+                 <input type="button" value="去结算"  onclick="window.location.href='{:url('\/Index\/Goorder\/goorder')}'">
+            {/if}
+           
+        </div>
+    </div>
+</div>
+<script>
+        //减数量操作
+
+      $('.num').each(
+        function (i) {
+             $('.minus').eq(i).click(function ()
+              {
+                var num=$('.num').eq(i).val();
+
+                var maxNum=$('.maxnum').eq(i).val();
+
+                if(num<=1){
+
+                    return ;
+
+                }
+
+                $('.num').eq(i).val(--num);
+                    var per_price= parseFloat($('.price').eq(i).html());
+                    var num= $('.num').eq(i).val();
+                    $('.minTotal').eq(i).html((num*per_price).toFixed(2));
+                $('.num').eq(i).trigger('change');
+                
+             }
+            );
+    
+   
+
+        //加数量操作
+
+            $('.plus').eq(i).click(function () {
+
+            var num=$('.num').eq(i).val();
+
+            //var maxNum=$('.maxnum').eq(i).val();
+
+            //if(num>=maxNum){
+
+            //    return ;
+
+            //}
+
+            num++;
+
+            $('.num').eq(i).val(num);
+               var per_price= parseFloat($('.price').eq(i).html());
+              var num= $('.num').eq(i).val();
+              $('.minTotal').eq(i).html((num*per_price).toFixed(2));
+              // alert(11)
+              // console.log(per_price);
+            $('.num').eq(i).trigger('change');
+
+           
+
+            });
+        //通过输入数量改变
+
+        //获取操作之前的数量
+
+                var oldNum=$('.num').val();
+
+                $(this).change(function()
+                {
+
+                    //获取最大数量
+                 
+                    changeData(i);
+                    
+                }
+                  
+              );
+
+           }
+        );
+       //全选
+
+    $('.ckeckall').click(function (){
+
+         $('.check_one').next().attr('checked',!($(this).next().is(':checked')));
+
+        $('.ckeckall').next().attr('checked',!($(this).next().is(':checked')));
+
+        $('.ckeckall').toggleClass('checked');
+
+             if($(this).next().is(':checked')){
+
+                 $('.check_one').addClass('checked_one');
+
+             }else{
+
+                 $('.check_one').removeClass('checked_one');
+
+             }
+
+             calTotal();
+
+    });
+   
+     //单选
+     $('.check_one').click(function () {
+
+        $(this).next().attr('checked',!($(this).next().is(':checked')));
+
+        $(this).toggleClass('checked_one');
+
+        $('.ckeckall').next().attr('checked',$('.check_one').length==$('.check_one').next().filter(':checked').length);
+
+        if($('.ckeckall').next().is(':checked')){
+
+            $('.ckeckall').addClass('checked');
+
+        }else{
+
+            $('.ckeckall').removeClass('checked');
+
+        }
+
+        calTotal();
+
+    });
+    
+
+    function calTotal(){
+
+    //获取当前商品状态
+
+    var checkbox=$('.check_one');
+
+    //获取商品单价
+
+    // var price=$('.price');
+
+    //获取商品数量
+
+    var num=$('.num');
+
+    //获取小计
+
+    var minTotal=$('.mintotal');
+    // console.log(minTotal);return
+
+    //设置总价
+
+    var sum=0.00;
+
+    //设置总件数
+
+    var numAll=0;
+
+    // var price = 0;
+
+    checkbox.each(function(i){
+
+        //兼容写法
+
+        // 
+        var input = $(this).next();
+        // console.log(input)
+
+        if(input[0].checked){
+            // (num[i].value*price[i].innerHTML).toFixed(2);
+           var td = $(this).parent().siblings()[3];
+           sum += parseFloat(td.querySelector(".minTotal").innerText); 
+          
+        }
+         
+    });
+    // console.log(price);
+
+    //总价
+
+    $('.total').html(sum.toFixed(2));
+
+}
+function changeData(i)
+{
+    var per_price= parseFloat($('.price').eq(i).html());
+    var number= $('.num').eq(i).val(); 
+    $('.minTotal').eq(i).html((number*per_price).toFixed(2));
+    var shopcar_id=$('.shopcar_id').eq(i).val();
+    // console.log($('.shopcar_id').eq(i).val());
+    $.ajax({
+                url : "{:url('Shopcar/editshopcar')}",
+                data : {'id':shopcar_id,'number':number},
+                dataType : 'json',
+                type : 'post',
+                async : false,
+                success : function(info){
+                    if( info.code == 1 ){
+                        // $(obj).parent().siblings().find(".total_price").html(price.toFixed(2));
+                        // checkChange();
+                    }
+                }
+            })
+    calTotal();
+} 
+    function del(id)
+    {
+       // var shopcar_id=$('.shopcar_id').val();
+        // alert(id);return
+        layer.confirm('确认要删除吗？',function(index){
+           $.ajax({
+                    url : "{:url('Shopcar/delete')}",
+                    data : {'id':id},
+                    dataType : 'json',
+                    type : 'post',
+                    async : false,
+                    success : function(info){
+                        if( info.code == 1 ){
+                            // $(obj).parent().siblings().find(".total_price").html(price.toFixed(2));
+                            // checkChange();
+                             window.location.reload();
+                        }
+                    }
+                });
+        
+            });
+    }
+
+//嘉峡的方法
+      
+    </script>
+{/block}

@@ -1,0 +1,25 @@
+{extend name="base"}
+{block name="private_source"}
+   <link rel="stylesheet" href="__STATIC__/home/css/pay_success.css">
+  
+  
+{/block}
+{block name="middle"}
+<!--middle-->
+<div id="middle">
+    <div class="content">
+            <div class="content_top clearfix">
+                <img src="__STATIC__/home/img/pay_success.png" alt="pay_success.png">
+                <div class="top_right">
+                    <h1>支付成功，我们会尽快为你发货</h1>
+                    <p>在线支付：<span>￥{$total_price}</span></p>
+                </div>
+            </div>
+            <div class="content_bottom">
+                <a href="{:url('Myorder/myorder')}">查看订单</a>
+                <a href="address.html">收货地址</a>
+            </div>
+    </div>
+</div>
+<!--middle end-->
+{/block}

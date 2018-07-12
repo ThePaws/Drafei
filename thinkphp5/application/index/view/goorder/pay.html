@@ -1,0 +1,174 @@
+{extend name="base"}
+{block name="private_source"}
+      <link rel="stylesheet" href="__STATIC__/home/css/pay.css">
+      <link rel="stylesheet" href="__STATIC__/home/css/sixCode.css">
+      <script src="__STATIC__/home/js/jquery-validate.js"></script>
+      <script src="__STATIC__/home/js/pay.js"></script>
+    <script src="__STATIC__/home/js/navSelect.js"></script>
+
+    
+{/block}
+{block name="middle"}
+<!--middle-->
+<div id="middle">
+    <div class="middle_top">
+        <ul class="clearfix">
+            <li>
+                <span>1</span>
+                <p>我的购物车</p>
+            </li>
+            <li>
+                <span>2</span>
+                <p>填写核对订单信息</p>
+            </li>
+            <li class="active">
+                <span>3</span>
+                <p>成功提交订单</p>
+            </li>
+        </ul>
+    </div>
+    <div class="middle_content">
+        <div class="content_top clearfix">
+            <img src="__STATIC__/home/img/pay_head.png" alt="pay_head.png">
+            <div class="top_right">
+                <h1>你的订单已生成，请尽快付款</h1>
+                <p>应付金额：<span>￥{$total_price}</span></p>
+                <p>请你在提交订单后<i>72</i>小时内完成支付，否则订单会自动取消</p>
+            </div>
+        </div>
+        <div class="content_middle">
+            <h1>你可以选择付款方式</h1>
+            <div class="pay">
+             <!--    <p>网银支付</p>
+                <ul class="clearfix">
+                    <li>
+                        <label class="checked clearfix">
+                            <img src="__STATIC__/home/img/pay_bank1.png" alt="pay_bank1.png">
+                            <input type="radio" name="bank" class="pay_bank" checked>
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank2.png" alt="pay_bank2.png">
+                            <input type="radio" name="bank" class="pay_bank">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank3.png" alt="pay_bank3.png">
+                            <input type="radio" name="bank" class="pay_bank">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank4.png" alt="pay_bank4.png">
+                            <input type="radio" name="bank" class="pay_bank" >
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank5.png" alt="pay_bank5.png">
+                            <input type="radio" name="bank" class="pay_bank" >
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank6.png" alt="pay_bank6.png">
+                            <input type="radio" name="bank" class="pay_bank" >
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank7.png" alt="pay_bank7.png">
+                            <input type="radio" name="bank" class="pay_bank" >
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank8.png" alt="pay_bank8.png">
+                            <input type="radio" name="bank" class="pay_bank">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank9.png" alt="pay_bank9.png">
+                            <input type="radio" name="bank" class="pay_bank">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_bank10.png" alt="pay_bank10.png">
+                            <input type="radio" class="pay_bank">
+                        </label>
+                    </li>
+                </ul> -->
+                <p>平台支付</p>
+                <ul class="clearfix">
+                    <li>
+                        <label class="clearfix checked" >
+                            <img src="__STATIC__/home/img/pay_method1.png" alt="pay_method1.png">
+                            <input type="radio" name="bank" class="pay_bank" checked="checked">
+                        </label>
+                    </li>
+                    <!-- <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_method2.png" alt="pay_method2.png">
+                            <input type="radio" name="bank" class="pay_bank">
+                        </label>
+                    </li>
+                    <li>
+                        <label class="clearfix">
+                            <img src="__STATIC__/home/img/pay_method3.png" alt="pay_method3.png">
+                            <input type="radio" name="bank" class="pay_bank">
+                        </label>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="middle_foot clearfix">
+      <!--   <div class="foot_top clearfix">
+            <label class="checked">
+                <img src="__STATIC__/home/img/pay_bank1.png" alt="pay_bank1.png">
+                <input type="checkbox" id="checkbox" checked>
+            </label>
+            <p>***1234</p>
+            <p><span>储蓄卡</span><span>快捷</span></p>
+            <p class="pay_total">支付<span>￥169.00</span>元</p>
+        </div> -->
+        <div class="foot_middle clearfix">
+            <img src="__STATIC__/home/img/pay_detection.png" alt="pay_detection.png">
+            <p>你已在安全的环境中，请放心使用！</p>
+        </div>
+        <div class="foot_bottom">
+            <!-- <p class="bank_code">支付密码：</p> -->
+            <!-- <form action="" method="post" name="payPassword" id="form_paypsw">
+                    <div id="payPassword_container" class="alieditContainer clearfix" data-busy="0">
+                        <div class="i-block clearfix" data-error="i_error">
+                            <div class="i-block six-password">
+                                <input class="i-text sixDigitPassword" id="payPassword_rsainput" type="password" autocomplete="off" required="required" value="" name="payPassword_rsainput" data-role="sixDigitPassword" tabindex="" maxlength="6" minlength="6" aria-required="true">
+                                <div tabindex="0" class="sixDigitPassword-box">
+                                    <i class=""><b></b></i>
+                                    <i><b></b></i>
+                                    <i><b></b></i>
+                                    <i><b></b></i>
+                                    <i><b></b></i>
+                                    <i><b></b></i>
+                                    <span id="cardwrap" data-role="cardwrap"></span>
+                                </div>
+                            </div>
+                            <a href="#">忘记密码？</a>
+                        </div>
+                    </div>
+                </form>
+            <p class="pay_code">请输入6位数字支付密码</p> -->
+            {if condition="$order_id!=''"}
+               <input type="button" class="confirm_pay" value="确认付款" onclick="window.location.href='/Index/Decidepay/decidepay_with_order/order_id/{$order_id}'">
+               {else} <input type="button" class="confirm_pay" value="确认付款" onclick="window.location.href='/Index/Decidepay/decidepay'">
+            {/if}
+         
+        <!-- </div>
+    </div>
+</div>
+<!--middle end-->
+{/block}
